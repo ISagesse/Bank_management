@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <title>The wishing App</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="container mt-5">
+        {% if messages %}
+                    <ul class="messages text-center">    
+                    {% for message in messages %}    
+                        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+
+        <h1>Welcome to the Peoples Bank</h1>
+        <h3>Created for the people by the people</h3>
+
+        <div class="row">
+            <div class="col mt-5">
+                <h1 class="text-center mb-3">Register</h1>
+                <form action="/register" method="post">
+                    {% csrf_token %}
+                    <div class="form-group row">
+                        <label for="first_name" class="col-sm-4 col-form-label">First Name</label>
+                        <div class="col-sm-6">
+                            <input name="first_name" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="last_name" class="col-sm-4 col-form-label">Last Name</label>
+                        <div class="col-sm-6">
+                            <input name="last_name" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="email" class="col-sm-4 col-form-label">Email</label>
+                        <div class="col-sm-6">
+                            <input name="email" type="email" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="password" class="col-sm-4 col-form-label">Password</label>
+                        <div class="col-sm-6">
+                            <input name="password" type="password" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="cf_password" class="col-sm-4 col-form-label">Confirm Password</label>
+                        <div class="col-sm-6">
+                            <input name="cf_password" type="password" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col text-center">
+                            <button type="submit" class="btn btn-outline-success">Register</button>
+                        </div>
+                </div>
+                </form>
+            </div>
+
+            <div class="col mt-5">
+                <h1 class="text-center mb-3 mr-5">Login</h1>
+                <form action="/login" method="post">
+                    {% csrf_token %}
+                    <div class="form-group row">
+                        <label for="email" class="col-sm-2 col-form-label">Email</label>
+                        <div class="col-sm-6">
+                            <input name="email" type="email" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="password" class="col-sm-2 col-form-label">Password</label>
+                        <div class="col-sm-6">
+                            <input name="password" type="password" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col text-center">
+                            <button type="submit" class="btn btn-outline-success">Login</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+</body>
+</html>

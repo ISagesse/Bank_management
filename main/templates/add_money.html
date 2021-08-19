@@ -1,0 +1,16 @@
+{% include 'base.html' %}
+{% block content %}
+<div class="container m-5">
+    <div class="align-middle">
+        <form action="/add_fund" class="form-inline" method="POST">
+            {% csrf_token %}
+            <div class="form-group mx-sm-3 mb-2">
+              <label for="stock_name" class="sr-only">Stock Name</label>
+              <input name="money" type="number" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-primary mb-2">Add</button>
+          </form>
+    </div>
+</div>
+    
+{% endblock content %}

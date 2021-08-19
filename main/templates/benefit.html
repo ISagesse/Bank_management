@@ -1,0 +1,45 @@
+{% include 'base.html' %} 
+{% block content %}
+{% load static %}
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <div class="card" style="width: 18rem">
+        <img src="{% static 'images/car.jpg' %}" class="card-img-top" alt="An image of a car" />
+        <div class="card-body">
+          <h5 class="card-title">Finance you next car with us</h5>
+          <p class="card-text">
+            We understanding that during those tuff times you need a reliable
+            transportation.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card" style="width: 18rem">
+        <img src=" {% static 'images/house.jpg' %} " class="card-img-top" alt="An image of a house" />
+        <div class="card-body">
+          <h5 class="card-title">Finance you next house with us</h5>
+          <p class="card-text">
+            We understanding that during those tuff times you need a place to
+            stay.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card" style="width: 18rem">
+        <img src="{% static 'images/credit.png' %}" class="card-img-top" alt="An image of a credit card" />
+        <div class="card-body">
+          <h5 class="card-title">Get the people's credit cards</h5>
+          <p class="card-text">
+            Enjoyed our 20% csh back during this lockdown.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
