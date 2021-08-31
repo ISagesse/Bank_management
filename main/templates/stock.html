@@ -1,12 +1,12 @@
 {% include 'base.html' %}
 {% block content %}
-    <div class="container m-5">
+    <div class="container mt-5">
 
       <form action="/stock/search" class="form-inline float-right" method="POST">
         {% csrf_token %}
         <div class="form-group mx-sm-3 mb-2">
           <label for="stock_name" class="sr-only">Stock Name</label>
-          <input name="stock_name" type="text" class="form-control" placeholder="TSLA">
+          <input name="stock_name" type="text" class="form-control" placeholder="for e.g TSLA">
         </div>
         <button type="submit" class="btn btn-primary mb-2">Search</button>
       </form>
@@ -15,7 +15,7 @@
             <thead>
               <tr>
                 <th scope="col">Stock Name</th>
-                <th scope="col">Closing Price</th>
+                <th scope="col">Price</th>
                 <th scope="col">Difference</th>
                 <th scope="col">Action</th>
               </tr>

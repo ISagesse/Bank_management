@@ -119,6 +119,8 @@ def add_stock(request):
         difference = x,
         user=this_user
     )
+    this_user.ballance -= float(yesterday_closing_price)
+    this_user.save()
     return redirect('/stock')
 
 def sell_stock(request, id):
