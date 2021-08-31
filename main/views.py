@@ -3,7 +3,6 @@ from django.contrib import messages
 from .models import User, Stock
 import bcrypt
 import requests
-import time
 
 STOCK_ENDPOINT = "https://www.alphavantage.co/query"
 NEWS_ENDPOINT = "https://newsapi.org/v2/everything"
@@ -132,7 +131,6 @@ def sell_stock(request, id):
         this_user = User.objects.get(id=request.session['userid'])
         this_user.ballance += int(stock1.price)
         this_user.save()
-        time.sleep(3)
         stock1.delete()
         return redirect('/stock')
 
