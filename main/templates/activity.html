@@ -1,6 +1,12 @@
 {% include 'base.html' %}
 {% block content %}
-    <div class="container">
-        <h1>Activity coming soon</h1>
+    <div class="container mt-3">
+        <ul class="list-group text-center">
+            {% for activity in user.activities.all %}
+                {% if activity %}
+                    <li class="list-group-item">{{ activity.text }} <div class="float-right"><p>{{ activity.created_at | date:'M-d-Y  g:i A' }}</p></div></li>
+                {% endif %}
+            {% endfor %}
+        </ul>
     </div>
 {% endblock content %}

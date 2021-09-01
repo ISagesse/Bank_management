@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .models import User, Stock
+from .models import User, Stock, Activity
 import bcrypt
 import requests
 
@@ -8,8 +8,6 @@ STOCK_ENDPOINT = "https://www.alphavantage.co/query"
 NEWS_ENDPOINT = "https://newsapi.org/v2/everything"
 
 STOCK_API_KEY = "CEBT02OMR2LTI43Q"
-
-
 
 # Create your views here.
 def index(request):
@@ -31,11 +29,15 @@ def register(request):
         new_password = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
 
         user = User.objects.create(
-                first_name = f_name,
-                last_name = l_name,
-                email = email,
-                password = new_password
-            )
+            first_name = f_name,
+            last_name = l_name,
+            email = email,
+            password = new_password
+        )
+        Activity.objects.create(
+            text=f'Welcome to the Peoples Bank {user.first_name} {user.last_name}',
+            user=user
+        )
         request.session['userid'] = user.id
         return redirect('/overview')
 
@@ -71,8 +73,13 @@ def add_fund(request):
     else:
         if request.method == "POST":
             this_user = User.objects.get(id=request.session['userid'])
-            this_user.ballance += int(request.POST['money'])
+            amount = float(request.POST['money'])
+            this_user.ballance += amount
             this_user.save()
+            Activity.objects.create(
+                text=f'Add ${amount} to my account',
+                user=this_user
+            )
             return redirect('/overview')
         else:
             return render(request, 'add_money.html')
@@ -82,7 +89,10 @@ def activity(request):
         messages.error(request, "Please login to access this page")
         return redirect('/')
     else:
-        return render(request, 'activity.html')
+        context = {
+            'user': User.objects.get(id=request.session['userid'])
+        }
+        return render(request, 'activity.html', context)
 
 def stock(request):
     if 'userid' not in request.session:
@@ -112,14 +122,20 @@ def add_stock(request):
     print(difference)
     
     this_user = User.objects.get(id=request.session['userid'])
+    stock_name = request.POST['stock_name']
     Stock.objects.create(
-        stock=request.POST['stock_name'],
+        stock=stock_name,
         price=yesterday_closing_price,
         difference = x,
         user=this_user
     )
     this_user.ballance -= float(yesterday_closing_price)
     this_user.save()
+
+    Activity.objects.create(
+        text=f'Purchase {stock_name} for ${float(yesterday_closing_price)}',
+        user=this_user
+    )
     return redirect('/stock')
 
 def sell_stock(request, id):
@@ -129,8 +145,12 @@ def sell_stock(request, id):
     else:
         stock1 = Stock.objects.get(id=id)
         this_user = User.objects.get(id=request.session['userid'])
-        this_user.ballance += int(stock1.price)
+        this_user.ballance += float(stock1.price)
         this_user.save()
+        Activity.objects.create(
+            text=f'Sell {stock1.stock} for ${float(stock1.price)}',
+            user=this_user
+        )
         stock1.delete()
         return redirect('/stock')
 

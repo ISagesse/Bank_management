@@ -27,7 +27,7 @@ class User(models.Model):
     last_name = models.CharField(max_length=250)
     email = models.CharField(max_length=250)
     password = models.CharField(max_length=450)
-    ballance = models.IntegerField(default=1000)
+    ballance = models.FloatField(default=1000)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -39,5 +39,11 @@ class Stock(models.Model):
     price = models.FloatField()
     difference = models.FloatField()
     user = models.ForeignKey(User, related_name="portfolio", on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+class Activity(models.Model):
+    text = models.TextField()
+    user = models.ForeignKey(User, related_name="activities", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
